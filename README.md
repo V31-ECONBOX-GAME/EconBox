@@ -1,5 +1,28 @@
 # EconBox
 
+<!-- CODING-TIME:START -->
+
+![Play time](.idea/readme/image/time-on-record.svg)
+
+<details>
+<summary>How this is counted</summary>
+
+Commits record when work was saved, never how long it took, so this is an
+estimate rather than a timesheet. Commits less than 120 minutes apart
+count as one sitting and contribute the real time between them; a commit that
+opens a sitting contributes a flat 120 minutes for the work that led up to
+it. Merges are skipped, and nothing that was never committed is visible here.
+
+Covers every author. Regenerated on each commit by `.githooks/coding-time`,
+which reads commit timestamps and nothing else. `GAP_MINUTES`, `OPENING_MINUTES`,
+`RECENT_DAYS` and `DAYS` change what it assumes.
+
+</details>
+
+<!-- CODING-TIME:END -->
+
+![Module dependencies](.idea/readme/image/module-dependencies.svg)
+
 A desktop game on [libGDX](https://libgdx.com/), generated with the official
 [gdx-liftoff](https://github.com/libgdx/gdx-liftoff) 1.14.2.1 scaffold and built with the same
 Gradle setup as the V31 monorepo: Kotlin DSL, `buildSrc` convention plugin, versions in
@@ -30,6 +53,31 @@ Packaged builds with a bundled JDK, so players need no Java installed. Output la
 
 Targets are `macM1`, `macX64`, `winX64`, `linuxX64`. The `--no-configuration-cache` flag is
 required because construo's packaging tasks are not configuration-cache compatible yet.
+
+## Git hooks
+
+Hooks live in `.githooks/`, migrated verbatim from the V31 monorepo. A fresh clone does not pick
+them up on its own -- `core.hooksPath` is local configuration, not something a repository can
+carry -- so turn them on once:
+
+```bash
+git config core.hooksPath .githooks
+```
+
+`pre-commit` then runs `coding-time` on every commit: it reads commit timestamps, redraws the
+play-time card at the top of this file, and stages the card and the README alongside your own
+changes. It stages only the files it actually rewrote, and it never blocks a commit -- a broken
+counter is not a reason to lose work.
+
+Run it by hand to refresh the card without committing:
+
+```bash
+.githooks/coding-time
+```
+
+What it assumes can be overridden from the environment: `GAP_MINUTES` (how long a pause ends a
+sitting), `OPENING_MINUTES` (credit for the commit that opens one), `RECENT_DAYS`, and `DAYS`
+(how much history the chart covers).
 
 ## Layout
 
