@@ -1,0 +1,22 @@
+  
+                                                         
+  
+                                                                  
+                                                                   
+                                          
+  
+                                                   
+  
+                                                                      
+                                                                    
+                                                                           
+                                                                      
+                                 
+   
+
+                                                                                      
+                                                                                       
+
+plugins {
+    `java-library`
+}
